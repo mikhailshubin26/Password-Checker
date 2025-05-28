@@ -1,4 +1,5 @@
 import sys
+import os
 from PySide6.QtWidgets import QApplication, QMainWindow, QLineEdit
 from PySide6.QtGui import QIcon, QAction, QFont, QPixmap
 from PySide6.QtCore import Qt, QTimer
