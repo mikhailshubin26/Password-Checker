@@ -53,13 +53,13 @@ pyinstaller --onefile --windowed --icon=icon.ico --add-data "img/logo.png;img" -
 Этот проект распространяется под лицензией MIT. Подробнее в файле LICENSE.
 
 ## Контакты
-Автор: Михаил Шубин
-GitHub: mikhailshubin26
-Email: mishaelshubin@gmail.com
++ Автор: Михаил Шубин
++ GitHub: mikhailshubin26
++ Email: mishaelshubin@gmail.com
 
 ## Поддержать
-BTC: ```bc1qllfd0zxmk45j3x53d5dnu9y0ls7vdx60yyk3u4```
-ETH: ```0x480468BbB77ef4a4abed20e81656e4CFBcc1C055```
-USDT TRC-20: ```TVrv9eQp4cvQ71NhE2uypCksjR9qQZBHcZ```
++ BTC: ```bc1qllfd0zxmk45j3x53d5dnu9y0ls7vdx60yyk3u4```
++ ETH: ```0x480468BbB77ef4a4abed20e81656e4CFBcc1C055```
++ USDT TRC-20: ```TVrv9eQp4cvQ71NhE2uypCksjR9qQZBHcZ```
 
 Ваша поддержка очень ценна ❤️
