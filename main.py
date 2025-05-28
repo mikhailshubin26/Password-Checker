@@ -1,15 +1,24 @@
 import sys
 import os
-from PySide6.QtWidgets import QApplication, QMainWindow, QLineEdit
+from PySide6.QtWidgets import QApplication, QMainWindow, QLineEdit, QWidget
 from PySide6.QtGui import QIcon, QAction, QFont, QPixmap
 from PySide6.QtCore import Qt, QTimer
 from ui_window import Ui_MainWindow
+from ui_faq_window import Ui_Form
+from faq_window import FAQWindow
+from support_window import SupportWindow
 from check import checker
 
 def resource_path(relative_path):
-    if hasattr(sys, '_MEIPASS'):  # PyInstaller запаковывает всё в _MEIPASS
-        return os.path.join(sys._MEIPASS, relative_path)
-    return os.path.join(os.path.abspath("."), relative_path)
+    if hasattr(sys, '_MEIPASS'):
+        # Запуск из PyInstaller
+        base_path = sys._MEIPASS
+    else:
+        # Запуск из исходников
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -17,38 +26,6 @@ class MainWindow(QMainWindow):
         self.setWindowIcon(QIcon(resource_path("icon.ico")))
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-
-        self.setStyleSheet("""
-    QMainWindow {
-        background-color: #121B26;
-    }
-    QLabel {
-        color: #E0E7FF;
-        font-size: 14pt;
-        font-weight: bold;
-    }
-    QPushButton {
-        background-color: #2563EB;
-        color: white;
-        border-radius: 6px;
-        padding: 8px 16px;
-        font-weight: bold;
-    }
-    QPushButton:hover {
-        background-color: #3B82F6;
-    }
-    QPushButton:pressed {
-        background-color: #1D4ED8;
-    }
-    QLineEdit {
-        background-color: #3B82F6;
-        border: 2px solid #2563EB;
-        border-radius: 6px;
-        color: #E0E7FF;
-        padding: 4px;
-    }
-""")
-
 
         self.password_visible=False
 
@@ -71,6 +48,12 @@ class MainWindow(QMainWindow):
     	)
 
         self.ui.pushButtonCheck.clicked.connect(self.check_password)
+
+        self.ui.pushButtonFAQ.clicked.connect(self.show_faq)
+        self.faq_window = None
+
+        self.ui.pushButtonSupport.clicked.connect(self.show_support)
+        self.support_window = None
 
         self.default_color = "white"
 
@@ -105,9 +88,32 @@ class MainWindow(QMainWindow):
         self.ui.labelResults.setStyleSheet(f"color: {result[1]};")
         self.ui.labelResults.setText(result[0])
 
+    def show_faq(self):
+        if self.faq_window is None:
+            self.faq_window = FAQWindow()
+        self.faq_window.show()
+        self.faq_window.raise_()
+        self.faq_window.activateWindow()
+
+    def show_support(self):
+        if self.support_window is None:
+            self.support_window=SupportWindow()
+        self.support_window.show()
+        self.support_window.raise_()
+        self.support_window.activateWindow()
+
+class FaqWindow(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.ui = Ui_Form()
+        self.ui.setupUi(self)
 
 if __name__ == "__main__":
+    def load_stylesheet(path):
+        with open(path, "r", encoding="utf-8") as f:
+            return f.read()
     app = QApplication(sys.argv)
+    app.setStyleSheet(load_stylesheet(resource_path("style.qss")))
     window = MainWindow()
     window.setWindowTitle("Password Checker")  # заголовок окна
     window.show()
